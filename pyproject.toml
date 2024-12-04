@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ege-data-engineering"
+version = "0.1.0"
+description = "Data Engineering project for AES ITMO course"
+authors = ["nikita.zinovich"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
