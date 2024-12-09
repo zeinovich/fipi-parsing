@@ -11,6 +11,11 @@ beautifulsoup4 = "^4.12.3"
 lxml = "^5.3.0"
 
 
+[tool.poetry.group.dev.dependencies]
+notebook = "^7.3.1"
+python-dotenv = "^1.0.1"
+gigachat = "^0.1.36"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
