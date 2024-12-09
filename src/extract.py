@@ -1,5 +1,5 @@
 import requests
-from src.constants import QUESTIONS_URL, PAGES_COUNT
+from src.constants import QUESTIONS_URL, PAGES_COUNT, MULTI_CHOICE_TASK_TYPE
 from src.task_extractor import TaskExtractor
 
 def main():

@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from typing import List
 from bs4.element import PageElement
+from src.constants import MULTI_CHOICE_TASK_TYPE
+from src.multi_choice_solver import solve_multi_choice_task
 
 class Task(BaseModel):
     id: str
@@ -36,6 +38,8 @@ class TaskExtractor:
         tags = []
         for td in info.find_all('td', {'class': 'param-row'}):
             tags.append(td.text)
-        answer = ""
         answer_type = info.find_all('td')[-1].text
+        answer = "" 
+        if answer_type == MULTI_CHOICE_TASK_TYPE:
+            answer = solve_multi_choice_task(task_guid)
         return Task(id=task_id, guid=task_guid, task_info=task_info, content=task_content, answer=answer, answer_type=answer_type, tags=tags)
