@@ -1,17 +1,8 @@
-# Кол-во страниц, с которых нужно спарсить данные
-QUANTITY_PAGES = 161
+PROJECT_ID = "AF0ED3F2557F8FFC4C06F80B6803FD26"
+PAGES_COUNT = 180
 
-# Общая url ссылка. После "=" подставляется номер конкретной страницы
-URL_PAGES = "https://ege.fipi.ru/bank/questions.php?proj=AF0ED3F2557F8FFC4C06F80B6803FD26&page="
+MULTI_CHOICE_TASK_TYPE = "Выбор ответов из предложенных вариантов"
 
-# Получение id. Найти можно по этим тегам + атрибутам:
-NAME_FOR_ID = "span"
-ATTRS_ID = "canselect"
-
-# Получение 1 блока (условие + задание). Найти можно по этим тегам + атрибутам:
-NAME_FOR_BLOCK = "div"
-ATTRS_BLOCK = "qblock"
-
-# Получение только условия. Найти можно по этим тегам + атрибутам:
-NAME_FOR_CONDITION = "div"
-ATTRS_CONDITION = "hint"
+# INDEX_URL = f"http://ege.fipi.ru/bank/index.php?proj={PROJECT_ID}"
+QUESTIONS_URL = f"http://ege.fipi.ru/bank/questions.php?proj={PROJECT_ID}"
+SOLVE_URL = f"http://ege.fipi.ru/bank/solve.php?proj={PROJECT_ID}"
