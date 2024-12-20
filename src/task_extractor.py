@@ -1,3 +1,4 @@
+import re
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -15,7 +16,7 @@ class Task(BaseModel):
     content: str
     answer: Optional[str]
     answer_type: str
-    tags: List[str]
+    tags: List
 
 
 class TaskExtractor:
@@ -26,6 +27,21 @@ class TaskExtractor:
     def extract_tasks(self):
         tasks = self.soup.find_all("div", {"class": "qblock"})
         return tasks
+
+    def _split_tags(self, tags):
+        # Regular expression to match version-like patterns
+        pattern = r"(\d+\.\d+\.\d+)"
+
+        split_tags = re.split(pattern, tags)[1:]
+        # Combine the matches with the split parts
+        unglued_tags = []
+
+        for m, tag in zip(split_tags[::2], split_tags[1::2]):
+            unglued_tags.append(" ".join((m, tag)))
+
+        unglued_tags = [tag.strip() for tag in unglued_tags if tag.strip()]
+
+        return unglued_tags
 
     def extract_task(self, task: PageElement):
         task_id = task.get("id", None)
@@ -49,6 +65,8 @@ class TaskExtractor:
 
         for td in info.find_all("td", {"class": "param-row"}):
             tags.append(td.text)
+
+        tags = [self._split_tags(tag) for tag in tags]
 
         answer_type = info.find_all("td")[-1].text
         answer = ""
