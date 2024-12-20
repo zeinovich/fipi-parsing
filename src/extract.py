@@ -1,28 +1,29 @@
 import requests
 import json
+import sqlite3
+
+from typing import List
 
 from tqdm import tqdm
 
 from src.constants import QUESTIONS_URL, PAGES_COUNT
-from src.task_extractor import TaskExtractor
+from src.task_extractor import TaskExtractor, Task
+
+from src.utils import logger
+
+DEFAULT_DB_PATH = "artifacts/tasks.db"
 
 
-def main():
-    tasks = []
+def extract(db_path: str):
 
     for page in tqdm(range(1, PAGES_COUNT + 1)):
         page_content = process_page(page)
         page_tasks = parse_page(page_content)
 
-        tasks.extend(page_tasks)
+        load_into_sqlite(page_tasks, db_path)
 
-    with open("./data/raw/tasks.json", "w") as f:
-        json.dump(
-            tasks,
-            f,
-            indent=4,
-            ensure_ascii=False,
-        )
+    logger.info(f"Extracted {get_total_tasks(db_path)} tasks")
+    
 
 
 def process_page(page: int):
@@ -40,13 +41,71 @@ def parse_page(page_content: str):
         task_data = extractor.extract_task(task)
 
         if task_data is None:
-            print("Task can't be extracted")
+            logger.warning("Task can't be extracted")
             continue
 
-        task_list.append(task_data.model_dump())
+        task_list.append(task_data)
 
     return task_list
 
 
+def load_into_sqlite(tasks: List[Task], db_path: str):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Create table if not exists
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tasks (
+            id TEXT PRIMARY KEY,
+            guid TEXT,
+            task_info TEXT,
+            task_text TEXT,
+            options TEXT,
+            answer TEXT,
+            answer_type TEXT,
+            tags TEXT
+        )
+    """
+    )
+
+    # Insert tasks into the table
+    for task in tasks:
+        task = task.model_dump()
+        
+        cursor.execute(
+            """
+            INSERT OR REPLACE INTO tasks (id, guid, task_info, task_text, options, answer, answer_type, tags)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+            (
+                task["id"],
+                task["guid"],
+                task["task_info"],
+                task["task_text"],
+                task["options"],
+                task.get("answer", None),
+                task["answer_type"],
+                json.dumps(task["tags"], ensure_ascii=False)[0],
+            ),
+        )
+
+    conn.commit()
+    conn.close()
+
+
+def get_total_tasks(db_path):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Query to count the total number of tasks
+    cursor.execute("SELECT COUNT(*) FROM tasks")
+    total_tasks = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total_tasks
+
+
 if __name__ == "__main__":
-    main()
+    extract(DEFAULT_DB_PATH)

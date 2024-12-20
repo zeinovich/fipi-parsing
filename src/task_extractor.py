@@ -13,7 +13,8 @@ class Task(BaseModel):
     id: str
     guid: str
     task_info: str
-    content: str
+    task_text: str
+    options: str
     answer: Optional[str]
     answer_type: str
     tags: List
@@ -60,7 +61,16 @@ class TaskExtractor:
                 task_content += "\n"
             task_content += elem.text
 
+        task_content = task_content.strip()
         info = self.soup.find("div", {"id": task_info})
+
+        task_text = "\n".join(task_content.split("\n")[:1])
+        options = "\n".join(task_content.split("\n")[1:])
+
+        if options == "":
+            task_text = "\n".join(task_content.split(".")[:1])
+            options = "\n".join(task_content.split(".")[1:])
+
         tags = []
 
         for td in info.find_all("td", {"class": "param-row"}):
@@ -78,7 +88,8 @@ class TaskExtractor:
             id=task_id,
             guid=task_guid,
             task_info=task_info,
-            content=task_content,
+            task_text=task_text,
+            options=options,
             answer=answer,
             answer_type=answer_type,
             tags=tags,
