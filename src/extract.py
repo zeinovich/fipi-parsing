@@ -15,12 +15,16 @@ DEFAULT_DB_PATH = "artifacts/tasks.db"
 
 
 def extract(db_path: str):
+    logger.info(f"[EXTRACT] URL: {QUESTIONS_URL}")
+    logger.info(f"[EXTRACT] # pages: {PAGES_COUNT}")
+    logger.info(f"[EXTRACT] DB: {db_path}")
+
     for page in tqdm(range(1, PAGES_COUNT + 1)):
         try:
-            page_content = process_page(page)
-            page_tasks = parse_page(page_content)
+            page_content = _process_page(page)
+            page_tasks = _parse_page(page_content)
 
-            load_into_sqlite(page_tasks, db_path)
+            _load_into_sqlite(page_tasks, db_path)
         except Exception as e:
             logger.error(e)
 
@@ -28,13 +32,13 @@ def extract(db_path: str):
     
 
 
-def process_page(page: int):
+def _process_page(page: int):
     url = QUESTIONS_URL + f"&page={page}"
     response = requests.get(url)
     return response.text
 
 
-def parse_page(page_content: str):
+def _parse_page(page_content: str):
     extractor = TaskExtractor(page_content)
     tasks = extractor.extract_tasks()
     task_list = []
@@ -51,7 +55,7 @@ def parse_page(page_content: str):
     return task_list
 
 
-def load_into_sqlite(tasks: List[Task], db_path: str):
+def _load_into_sqlite(tasks: List[Task], db_path: str):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 

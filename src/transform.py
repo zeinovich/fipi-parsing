@@ -12,7 +12,19 @@ DEFAULT_DB_PATH = "artifacts/tasks.db"
 DEFAULT_CHROMA_DIR = "./chroma"
 
 
-def tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA_DIR):
+def transform(db_path: str, chroma_dir: str = None):
+    logger.info(f"[TRANSFORM & LOAD] DB: {db_path}")
+    logger.info(f"[TRANSFORM & LOAD] Chroma: {chroma_dir}")
+
+    try:
+        tasks = _load_tasks(db_path)
+        _tl_embeddings(tasks, chroma_dir)
+    except Exception as e:
+        logger.error(e)
+        raise e
+
+
+def _tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA_DIR):
     # Initialize Chroma client
     client = PersistentClient(path=chroma_dir)
 
@@ -47,7 +59,7 @@ def tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA_
     client.clear_system_cache()
 
 
-def load_tasks(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, str]]:
+def _load_tasks(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, str]]:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -72,18 +84,6 @@ def load_tasks(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, str]]:
     logger.info(f"Loaded {len(tasks)} tasks from SQL DB")
 
     return tasks
-
-
-def transform(db_path: str, chroma_dir: str = None):
-    logger.info(f"[TRANSFORM & LOAD] DB: {db_path}")
-    logger.info(f"[TRANSFORM & LOAD] Chroma: {chroma_dir}")
-
-    try:
-        tasks = load_tasks(db_path)
-        tl_embeddings(tasks, chroma_dir)
-    except Exception as e:
-        logger.error(e)
-        raise e
 
 
 if __name__ == "__main__":
