@@ -15,12 +15,14 @@ DEFAULT_DB_PATH = "artifacts/tasks.db"
 
 
 def extract(db_path: str):
-
     for page in tqdm(range(1, PAGES_COUNT + 1)):
-        page_content = process_page(page)
-        page_tasks = parse_page(page_content)
+        try:
+            page_content = process_page(page)
+            page_tasks = parse_page(page_content)
 
-        load_into_sqlite(page_tasks, db_path)
+            load_into_sqlite(page_tasks, db_path)
+        except Exception as e:
+            logger.error(e)
 
     logger.info(f"Extracted {get_total_tasks(db_path)} tasks")
     
