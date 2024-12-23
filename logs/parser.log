@@ -13,3 +13,26 @@
 2024-12-23 12:25:22,240 - fipi-parser - INFO - Loaded 1220 tasks from SQL DB
 2024-12-23 12:25:22,246 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
 2024-12-23 12:25:22,344 - fipi-parser - ERROR - Collection tasks already exists
+2024-12-23 12:36:17,463 - fipi-parser - INFO - [EXTRACT] URL: http://ege.fipi.ru/bank/questions.php?proj=AF0ED3F2557F8FFC4C06F80B6803FD26
+2024-12-23 12:36:17,463 - fipi-parser - INFO - [EXTRACT] # pages: 122
+2024-12-23 12:36:17,463 - fipi-parser - INFO - [EXTRACT] DB: ./artifacts/tasks.db
+2024-12-23 12:37:30,596 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-23 12:37:30,596 - fipi-parser - INFO - [TRANSFORM & LOAD] DB: ./artifacts/tasks.db
+2024-12-23 12:37:30,596 - fipi-parser - INFO - [TRANSFORM & LOAD] Chroma: ./chroma_
+2024-12-23 12:37:30,606 - fipi-parser - INFO - Loaded 1220 tasks from SQL DB
+2024-12-23 12:37:30,615 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-12-23 12:37:30,983 - fipi-parser - INFO - Initialized Chroma DB (persistent) at ./chroma_
+2024-12-23 12:37:30,984 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-23 12:37:30,984 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sergeyzh/rubert-tiny-turbo
+2024-12-23 12:38:27,971 - fipi-parser - INFO - [EXTRACT] URL: http://ege.fipi.ru/bank/questions.php?proj=AF0ED3F2557F8FFC4C06F80B6803FD26
+2024-12-23 12:38:27,971 - fipi-parser - INFO - [EXTRACT] # pages: 122
+2024-12-23 12:38:27,972 - fipi-parser - INFO - [EXTRACT] DB: ./artifacts/tasks.db
+2024-12-23 12:39:40,080 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-23 12:39:40,080 - fipi-parser - INFO - [TRANSFORM & LOAD] DB: ./artifacts/tasks.db
+2024-12-23 12:39:40,080 - fipi-parser - INFO - [TRANSFORM & LOAD] Chroma: ./chroma_
+2024-12-23 12:39:40,092 - fipi-parser - INFO - Loaded 1220 tasks from SQL DB
+2024-12-23 12:39:40,106 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-12-23 12:39:40,592 - fipi-parser - INFO - Initialized Chroma DB (persistent) at ./chroma_
+2024-12-23 12:39:40,594 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2024-12-23 12:39:40,594 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sergeyzh/rubert-tiny-turbo
+2024-12-23 12:41:11,244 - fipi-parser - INFO - Processed 1220 documents and dumped to Chroma

@@ -12,7 +12,7 @@ DEFAULT_DB_PATH = "artifacts/tasks.db"
 DEFAULT_CHROMA_DIR = "./chroma"
 
 
-def transform(db_path: str, chroma_dir: str = None):
+def transform_load(db_path: str, chroma_dir: str = None):
     logger.info(f"[TRANSFORM & LOAD] DB: {db_path}")
     logger.info(f"[TRANSFORM & LOAD] Chroma: {chroma_dir}")
 
@@ -39,8 +39,8 @@ def _tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA
     # Transform tasks into embeddings (example transformation)
     for task in tqdm(tasks):
         id_, task_text, options = task.values()
-        e_task = model.encode(task_text)
-        e_options = model.encode(options)
+        e_task = model.encode(task_text, show_progress_bar=False)
+        e_options = model.encode(options, show_progress_bar=False)
 
         tasks_collection.add(
             embeddings=[e_task],
