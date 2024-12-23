@@ -1,0 +1,15 @@
+2024-12-20 14:58:31,748 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-20 15:00:24,799 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-20 15:15:09,196 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-20 15:17:25,028 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-20 16:16:05,354 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-20 16:26:50,444 - fipi-parser - INFO - Extracted 1220 tasks
+2024-12-23 12:24:22,904 - fipi-parser - INFO - [TRANSFORM & LOAD] DB: artifacts/tasks.db
+2024-12-23 12:24:22,905 - fipi-parser - INFO - [TRANSFORM & LOAD] Chroma: ./chroma
+2024-12-23 12:24:22,921 - fipi-parser - INFO - Loaded 1220 tasks from SQL DB
+2024-12-23 12:24:22,932 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-12-23 12:25:22,234 - fipi-parser - INFO - [TRANSFORM & LOAD] DB: artifacts/tasks.db
+2024-12-23 12:25:22,234 - fipi-parser - INFO - [TRANSFORM & LOAD] Chroma: ./chroma
+2024-12-23 12:25:22,240 - fipi-parser - INFO - Loaded 1220 tasks from SQL DB
+2024-12-23 12:25:22,246 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2024-12-23 12:25:22,344 - fipi-parser - ERROR - Collection tasks already exists
