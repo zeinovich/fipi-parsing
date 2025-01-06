@@ -87,4 +87,4 @@ def _load_tasks(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
-    transform(DEFAULT_DB_PATH, DEFAULT_CHROMA_DIR)
+    transform_load(DEFAULT_DB_PATH, DEFAULT_CHROMA_DIR)
