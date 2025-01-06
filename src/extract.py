@@ -92,7 +92,7 @@ def _load_into_sqlite(tasks: List[Task], db_path: str):
                 task["options"],
                 task.get("answer", None),
                 task["answer_type"],
-                json.dumps(task["tags"], ensure_ascii=False)[0],
+                json.dumps(task["tags"], ensure_ascii=False),
             ),
         )
 
