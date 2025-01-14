@@ -1,5 +1,6 @@
 *.env
 *.sqlite*
 *.db
+!tasks.db
 __pycache__/
 chroma*/
