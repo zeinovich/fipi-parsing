@@ -29,8 +29,8 @@ def _tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA
     client = PersistentClient(path=chroma_dir)
 
     # Create a collection
-    tasks_collection = client.create_collection(name="tasks")
-    options_collection = client.create_collection(name="options")
+    tasks_collection = client.get_or_create_collection(name="tasks")
+    options_collection = client.get_or_create_collection(name="options")
 
     logger.info(f"Initialized Chroma DB (persistent) at {chroma_dir}")
 
@@ -42,13 +42,13 @@ def _tl_embeddings(tasks: List[Dict[str, str]], chroma_dir: str = DEFAULT_CHROMA
         e_task = model.encode(task_text, show_progress_bar=False)
         e_options = model.encode(options, show_progress_bar=False)
 
-        tasks_collection.add(
+        tasks_collection.upsert(
             embeddings=[e_task],
             documents=[json.dumps(task, ensure_ascii=False)],
             metadatas=[{"source": "web"}],
             ids=id_,
         )
-        options_collection.add(
+        options_collection.upsert(
             embeddings=[e_options],
             documents=[json.dumps(task, ensure_ascii=False)],
             metadatas=[{"source": "web"}],
@@ -68,8 +68,8 @@ def _load_tasks(db_path: str = DEFAULT_DB_PATH) -> List[Dict[str, str]]:
         """
         SELECT json_group_array(
             json_object(
-                'id', id, 
-                'task_text', task_text, 
+                'id', id,
+                'task_text', task_text,
                 'options', options
                 )
         )
